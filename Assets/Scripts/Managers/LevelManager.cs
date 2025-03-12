@@ -28,7 +28,21 @@ public class LevelManager : MonoBehaviour
     public void LevelCleared()
     {
         CurrentLevel += 1;
-        LoadLevel(CurrentLevel);
+        if (CurrentLevel >= Level_Data.Data.Count)
+        {
+            SceneManager.LoadSceneAsync(2);
+        }
+        else
+        {
+            LoadLevel(CurrentLevel);
+        }
+
+    }
+
+    public void ClearAll()
+    {
+        CurrentLevel = 0;
+        PlayerPrefs.SetInt("LAST LEVEL", CurrentLevel);
     }
 
 

@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public int Score => _score;
 
     private bool isPaused;
+    //can be used for ivoking sound 
     public event Action OnPlayerDead;
 
     private Controls _playerControls;
@@ -218,6 +219,8 @@ public class GameManager : MonoBehaviour
         if (_health < 0)
         {
             _health = 0;
+            LevelManager.Instance.ClearAll();
+            Ref_UIManager.ShowFailScreen();
             OnPlayerDead?.Invoke();
         }
     }

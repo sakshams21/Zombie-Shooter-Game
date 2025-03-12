@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Ammo_Text;
     [SerializeField] private TextMeshProUGUI Objective_Text;
 
+    [SerializeField] private Canvas FailScreen_Canvas;
+
     private void Start()
     {
         GameManager.Instance.OnHeathChange += HealthUpdate;
@@ -54,6 +56,11 @@ public class UIManager : MonoBehaviour
     {
         Pause_Canvas.enabled = status;
     }
+    public void ShowFailScreen()
+    {
+        FailScreen_Canvas.enabled = true;
+    }
+
 
     public void BackToMainMenu()
     {
