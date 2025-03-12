@@ -2,14 +2,18 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
-//Will handle clip mangement and reloading
+/// <summary>
+/// Handles bullet shooting and weapon spawn
+/// </summary>
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private Transform GunSpawnPoint_Transform;
     [SerializeField] private Image Reload_Image;
 
-
+    //can used to invoke bullet sound through sound manager, particle effect, and UI update
+    public static event Action<int, int> OnBulletShoot;
     private GunData _currentGunData;
     private Weapon _currentGun;
     private Vector3 _bulletSpawnPoint;
@@ -56,16 +60,15 @@ public class WeaponManager : MonoBehaviour
     {
         if (!_canShoot || _isReloading) return;
         _canShoot = false;
-        Bullet bullet = GameManager.Instance.Ref_PoolManager.GetBullet();
+        Bullet bullet = GameManager.Instance.GetFromPool_Bullet();
         bullet.transform.position = _bulletSpawnPoint;
         bullet.gameObject.SetActive(true);
         bullet.StartBullet(_currentGunData.Bullet_Speed, _currentGunData.Attack_Damage);
         _currentGun.Flash();
-
         _startTimer = true;
 
-
         _currentMag--;
+        OnBulletShoot?.Invoke(_currentMag, _currentGunData.Magazine_Size);
         if (_currentMag <= 0)
         {
             ReloadGun();
@@ -81,6 +84,7 @@ public class WeaponManager : MonoBehaviour
         {
             _isReloading = false;
             _currentMag = _currentGunData.Magazine_Size;
+            OnBulletShoot?.Invoke(_currentMag, _currentGunData.Magazine_Size);
             Reload_Image.gameObject.SetActive(false);
         });
     }

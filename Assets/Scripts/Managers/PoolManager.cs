@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
-using ZombieShooter;
 
+/// <summary>
+/// Object Pooling for bullet and zombies
+/// </summary>
 public class PoolManager : MonoBehaviour
 {
     // public static PoolManager Instance { get; private set; }
@@ -23,7 +24,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private Queue<Zombie> SmallZombie_Pool = new();
     [Space(10)]
     [SerializeField] private Transform ZombieSpawnPoint_Transform;
-    private WaitForSeconds _spawnWaitTime = new WaitForSeconds(0.1f);
+    private WaitForSecondsRealtime _spawnWaitTime = new WaitForSecondsRealtime(0.1f);
 
     public IEnumerator Initialize()
     {
@@ -70,7 +71,6 @@ public class PoolManager : MonoBehaviour
     {
         bullet.gameObject.SetActive(false);
         Bullet_Pool.Enqueue(bullet);
-
     }
     #endregion
 

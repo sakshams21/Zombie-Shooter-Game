@@ -25,6 +25,6 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
         Bullet_RigidBody.linearVelocityX = 0;
         //Back to pool
-        GameManager.Instance.Ref_PoolManager.BackToPool_Bullet(this);
+        GameManager.Instance.BackToPool_Bullet(this);
     }
 }

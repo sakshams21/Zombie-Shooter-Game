@@ -1,5 +1,4 @@
 using UnityEngine;
-using ZombieShooter;
 using Microlight.MicroBar;
 using System.Collections;
 using System;
@@ -8,29 +7,35 @@ public class Zombie : MonoBehaviour, IDamageable
     [SerializeField] private CapsuleCollider2D ZombieCollider;
     [SerializeField] private Animator Zombie_Animator;
     [SerializeField] private MicroBar Zombie_Health;
-    private int _health;
-
-    private ZombieData _data;
 
     private int Attack_AnimationHash = Animator.StringToHash("Attack");
     private int Walk_AnimationHash = Animator.StringToHash("Walk");
     private int Death_AnimationHash = Animator.StringToHash("Dead");
     private int Hit_AnimationHash = Animator.StringToHash("Hit");
 
+
     public static event Action OnZombieDeath;
+
     private bool isWalkable;
     private WaitForSeconds _zombieAttackCooldown;
     private WaitForSeconds _zombieAttackDelay;
     private Coroutine _attackCoro;
+    private ZombieData _data;
+    private int _health;
+
+
     public void ZombieStart(ZombieData zombieData)
     {
         _data = zombieData;
         isWalkable = true;
         _health = _data.Health;
+
         AnimationUpdate_Walk(true);
         ZombieCollider.enabled = true;
+
         Zombie_Health.Initialize(_data.Health);
         Zombie_Health.gameObject.SetActive(true);
+
         _zombieAttackCooldown = new WaitForSeconds(_data.Attack_Cooldown);
         _zombieAttackDelay = new WaitForSeconds(0.5f);
     }
@@ -41,11 +46,6 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             transform.position += Vector3.left * Time.deltaTime * _data.Movement_Speed;
         }
-    }
-
-    public int GetZombieDamage()
-    {
-        return _data.Attack_Damage;
     }
 
 
@@ -67,18 +67,16 @@ public class Zombie : MonoBehaviour, IDamageable
         AnimationUpdate_Death();
         ZombieCollider.enabled = false;
         Zombie_Health.gameObject.SetActive(false);
-        StopCoroutine(_attackCoro);
+        if (_attackCoro != null)
+        {
+            StopCoroutine(_attackCoro);
+            _attackCoro = null;
+        }
         OnZombieDeath?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // if (collision.gameObject.CompareTag("Player"))
-        // {
-        //     isWalkable = false;
-        //     AnimationUpdate_Walk(false);
-        //     Attack();
-        // }
 
         if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable target))
         {
@@ -87,12 +85,6 @@ public class Zombie : MonoBehaviour, IDamageable
             _attackCoro = StartCoroutine(Attack_Coro(target));
         }
     }
-
-    // private void Attack(ref IDamageable target)
-    // {
-    //     StartCoroutine(Attack_Coro(target));
-    // }
-
 
     IEnumerator Attack_Coro(IDamageable target)
     {
@@ -107,10 +99,10 @@ public class Zombie : MonoBehaviour, IDamageable
 
     public void AfterDeath()
     {
-        GameManager.Instance.Ref_PoolManager.BackToPool_Zombie(this, _data.Type);
+        GameManager.Instance.BackToPool_Zombie(this, _data.Type);
     }
 
-    #region ZOmbie Animation
+    #region Zombie Animation
 
     private void AnimationUpdate_Hit()
     {

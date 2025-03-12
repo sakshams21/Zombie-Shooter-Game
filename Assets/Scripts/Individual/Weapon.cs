@@ -3,9 +3,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Handles shooting of bullets
-/// Clip management
-/// 
+/// Handles muzzle flash display only and provides bullet spawn point
 /// </summary>
 public class Weapon : MonoBehaviour
 {

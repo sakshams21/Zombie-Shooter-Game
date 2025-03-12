@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   Weapon_Prefab: {fileID: 5885123555398152330, guid: 54af3a1509c3fc74d91ca43c22a11f46, type: 3}
-  Attack_Damage: 25
+  WeaponSelect_Prefab: {fileID: 8514225436080504956, guid: 39f4394e05fa83b41a32a67e392f2364, type: 3}
+  Attack_Damage: 45
   Reload_Duration: 3
   FireRate: 0.9
-  Magazine_Size: 14
-  Bullet_Speed: 20
+  Magazine_Size: 6
+  Bullet_Speed: 40

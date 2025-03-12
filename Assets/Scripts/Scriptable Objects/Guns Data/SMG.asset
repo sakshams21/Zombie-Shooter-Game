@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SMG
   m_EditorClassIdentifier: 
   Weapon_Prefab: {fileID: 6543448797137426263, guid: 011f28ac906b6d241980aec94e49e316, type: 3}
-  Attack_Damage: 2
+  WeaponSelect_Prefab: {fileID: 8514225436080504956, guid: 5c784cc57ab03a445b604844b465f57b, type: 3}
+  Attack_Damage: 10
   Reload_Duration: 2
   FireRate: 0.18
   Magazine_Size: 25
-  Bullet_Speed: 25
+  Bullet_Speed: 30

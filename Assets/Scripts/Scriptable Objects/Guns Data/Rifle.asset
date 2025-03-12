@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   Weapon_Prefab: {fileID: 4759935898586357607, guid: 1f3b2f9106ec7cc4d92446a6850eb386, type: 3}
-  Attack_Damage: 5
+  WeaponSelect_Prefab: {fileID: 8514225436080504956, guid: 93e830f9b101c6b449ef040aa43225eb, type: 3}
+  Attack_Damage: 15
   Reload_Duration: 2
   FireRate: 0.2
   Magazine_Size: 30
-  Bullet_Speed: 25
+  Bullet_Speed: 35

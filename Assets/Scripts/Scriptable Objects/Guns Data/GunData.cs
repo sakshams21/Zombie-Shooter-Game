@@ -1,10 +1,12 @@
 using UnityEngine;
-using ZombieShooter;
+using ZombiesShooter.MainMenu;
+
 
 [CreateAssetMenu(fileName = "GunData", menuName = "Scriptable Objects/GunData")]
 public class GunData : ScriptableObject
 {
     public Weapon Weapon_Prefab;
+    public WeaponSelect WeaponSelect_Prefab;
     public int Attack_Damage;
     public float Reload_Duration;
 
